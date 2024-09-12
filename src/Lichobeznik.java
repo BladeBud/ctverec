@@ -4,7 +4,7 @@ import java.util.Scanner;
  * @author ruzicka
  * @since 2024-09-10
  */
-public class lichobeznik {
+public class Lichobeznik {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
