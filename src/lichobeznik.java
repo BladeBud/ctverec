@@ -7,20 +7,28 @@ import java.util.Scanner;
 public class lichobeznik {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String hvezda = "*";
 
-        System.out.println("Zadejte velikost lichobeyniku (musi byt liche): ");
+        System.out.printf("Zadejte velikost lichobeyniku (musi byt liche): ");
         int velikost = scanner.nextInt();
-        if (velikost % 2 != 0) {
-            for (int j = 0; j < velikost; j++) {
 
-                System.out.println(hvezda);
-                hvezda = hvezda + "*" + "*";
+        for (int i = 1; i <= velikost; i++) {
+            for (int j = velikost; j > i; j--) {
+                System.out.print(" ");
             }
-
-        } else {
-            System.out.println("Zadejte liche cislo.");
+            for (int k = 1; k <= (2 * i - 1); k++) {
+                System.out.print("*");
+            }
+            System.out.println();
         }
 
+        for (int i = velikost - 1; i >= 1; i--) {
+            for (int j = velikost; j > i; j--) {
+                System.out.print(" ");
+            }
+            for (int k = 1; k <= (2 * i - 1); k++) {
+                System.out.print("*");
+            }
+            System.out.println();
+        }
     }
 }
