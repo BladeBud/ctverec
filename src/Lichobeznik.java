@@ -12,23 +12,21 @@ public class Lichobeznik {
         int velikost = scanner.nextInt();
 
         for (int i = 1; i <= velikost; i++) {
-            for (int j = velikost; j > i; j--) {
-                System.out.print(" ");
-            }
-            for (int k = 1; k <= (2 * i - 1); k++) {
-                System.out.print("*");
-            }
-            System.out.println();
+            lichobezniceni(velikost, i);
         }
 
         for (int i = velikost - 1; i >= 1; i--) {
-            for (int j = velikost; j > i; j--) {
-                System.out.print(" ");
-            }
-            for (int k = 1; k <= (2 * i - 1); k++) {
-                System.out.print("*");
-            }
-            System.out.println();
+            lichobezniceni(velikost, i);
         }
+    }
+
+    private static void lichobezniceni(int velikost, int i) {
+        for (int j = velikost; j > i; j--) {
+            System.out.print(" ");
+        }
+        for (int k = 1; k <= (2 * i - 1); k++) {
+            System.out.print("*");
+        }
+        System.out.println();
     }
 }
