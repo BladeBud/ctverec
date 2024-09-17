@@ -18,7 +18,7 @@ public class Trojuhelnik2 {
             throw new IllegalArgumentException("Body netvori trojuhelnik");
         }
     }
-    public void GUIpopupask() {
+    public static Trojuhelnik2 GUIpopupask() {
         JTextField x1Field = new JTextField(5);
         JTextField y1Field = new JTextField(5);
         JTextField x2Field = new JTextField(5);
@@ -50,20 +50,9 @@ public class Trojuhelnik2 {
             int x3 = Integer.parseInt(x3Field.getText());
             int y3 = Integer.parseInt(y3Field.getText());
 
-            point1 = new Point(x1, y1);
-            point2 = new Point(x2, y2);
-            point3 = new Point(x3, y3);
+            return new Trojuhelnik2(new Point(x1, y1), new Point(x2, y2), new Point(x3, y3));
         }
-    }
-
-    public Point getPoint1() {
-       return point1;
-   }
-    public Point getPoint2() {
-         return point2;
-    }
-    public Point getPoint3() {
-         return point3;
+        return null;
     }
     public double getSideA() {
         return point1.distance(point2);
@@ -86,8 +75,7 @@ public class Trojuhelnik2 {
         return String.format("Trojuhelnik: %s, %s, %s", point1, point2, point3);
     }
     public static void main(String[] args) {
-        Trojuhelnik2 trojuhelnik = new Trojuhelnik2(new Point(0, 0), new Point(0, 1), new Point(1, 0));
-        trojuhelnik.GUIpopupask();
+        Trojuhelnik2 trojuhelnik = GUIpopupask();
         System.out.println(trojuhelnik);
         System.out.println("Obvod: " +String.format("%.2f", trojuhelnik.getPerimeter()));
         System.out.println("Obsah: " + String.format("%.2f", trojuhelnik.getArea()) );
