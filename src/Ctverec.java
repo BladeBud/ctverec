@@ -14,12 +14,12 @@ public class Ctverec {
 
             for (int i = 0; i < s; i++) {
 
-                    if (j == 0 || j == s - 1 || i == 0 || i == s - 1 ){
+                if (j == 0 || j == s - 1 || i == 0 || i == s - 1 ){
                     System.out.printf("*" + " ");
 
-                    }else{
-                        System.out.printf(" " + " ");
-                             }
+                }else{
+                    System.out.printf(" " + " ");
+                }
             }
             System.out.println();
         }
