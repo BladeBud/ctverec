@@ -6,6 +6,7 @@ public class ArrayTreeDMS {
     private TreeNode[] nodes = new TreeNode[MAX_NODES];
     private int nextFreeIndex = 0;
 
+
     // Nested TreeNode class
     private class TreeNode {
         int id;             // Node's unique identifier
@@ -51,16 +52,16 @@ public class ArrayTreeDMS {
         }
 
         // Update nextFreeIndex to the next available slot
-        updateNextFreeIndex();
+        updateNextFreeIndexAdd();
 
-        return nextFreeIndex - 1;
+        return nextFreeIndex -  1;
     }
 
     // Update to the next free index
-    private void updateNextFreeIndex() {
-        while (nextFreeIndex < MAX_NODES && nodes[nextFreeIndex] != null) {
-            nextFreeIndex++;
-        }
+    private void updateNextFreeIndexAdd() {
+        TreeNode node = nodes[nextFreeIndex];
+        nextFreeIndex = node.fieldPointer;;
+
     }
 
     // Delete a node and its entire subtree
@@ -71,6 +72,7 @@ public class ArrayTreeDMS {
         }
 
         // Recursively delete all children first
+        //TODO: make it to delete all that point to this not recursive
         for (int i = 0; i < MAX_NODES; i++) {
             if (nodes[i] != null && nodes[i].parentId == nodeIndex) {
                 deleteNode(i);
@@ -83,13 +85,16 @@ public class ArrayTreeDMS {
             nodes[parentId].nodeCount--;
         }
 
-        // Clear the node
+        UpdateNextFreeIndexDelete(nodeIndex);
         nodes[nodeIndex] = null;
+    }
 
-        // Update next free index if necessary
-        if (nodeIndex < nextFreeIndex) {
-            nextFreeIndex = nodeIndex;
-        }
+    public void UpdateNextFreeIndexDelete(int nodeIndex) {
+        TreeNode node = nodes[nodeIndex];
+        int freeProvisionalPointer = 0;
+        freeProvisionalPointer = nextFreeIndex;
+        nextFreeIndex = nodeIndex;
+        node.fieldPointer = freeProvisionalPointer;
     }
 
     // Print the entire tree structure
@@ -97,28 +102,35 @@ public class ArrayTreeDMS {
     public static void main(String[] args) {
         ArrayTreeDMS dms = new ArrayTreeDMS();
 
-        System.out.println("Initial Tree Structure:");
-        dms.printTree();
+        System.out.println("pointer:" + dms.nextFreeIndex);
 
         // Create tree structure
         int rootIndex = dms.insertNode(-1, "Root");
         int documentsIndex = dms.insertNode(rootIndex, "Documents");
         int projectsIndex = dms.insertNode(rootIndex, "Projects");
+        System.out.println("pointer:" + dms.nextFreeIndex);
+        dms.printIndexPointers();
 
         // Print initial tree
         System.out.println("Initial Tree Structure:");
         dms.printTree();
+        System.out.println("pointer:" + dms.nextFreeIndex);
+        dms.printIndexPointers();
 
         // Delete a node
         System.out.println("\nAfter deleting Documents node:");
         dms.deleteNode(documentsIndex);
         dms.printTree();
+        System.out.println("pointer:" + dms.nextFreeIndex);
+        dms.printIndexPointers();
 
         // Insert a new node to show reuse of deleted index
         System.out.println("\nInserting a new node:");
         int newDocumentsIndex = dms.insertNode(rootIndex, "NewDocuments");
         int newDocument1Index = dms.insertNode(newDocumentsIndex, "Document1");
         dms.printTree();
+        System.out.println("pointer:" + dms.nextFreeIndex);
+        dms.printIndexPointers();
     }
 
     public void printTree() {
@@ -130,8 +142,15 @@ public class ArrayTreeDMS {
 
                 // Print documents for this node
                 if (!node.documents.isEmpty()) {
-                    System.out.println("  Documents: " + node.documents);
+                    System.out.println(" Documents: " + node.documents);
                 }
+            }
+        }
+    }
+    public void printIndexPointers() {
+        for (int i = 0; i < MAX_NODES; i++) {
+            if (nodes[i] != null) {
+                System.out.printf("Index: %d, Points to: %d\n", i, nodes[i].fieldPointer);
             }
         }
     }
