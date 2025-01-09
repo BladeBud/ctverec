@@ -22,7 +22,7 @@ public class ArrayTreeDMS {
             this.name = name;
             this.nodeCount = 0;
             this.docCount = 0;
-            this.fieldPointer = 0;
+            this.fieldPointer = (id + 1);
             this.documents = new ArrayList<>();
         }
     }
@@ -93,24 +93,12 @@ public class ArrayTreeDMS {
     }
 
     // Print the entire tree structure
-    public void printTree() {
-        for (int i = 0; i < MAX_NODES; i++) {
-            if (nodes[i] != null) {
-                TreeNode node = nodes[i];
-                System.out.printf("Index: %d, ID: %d, Name: %s, Parent: %d, Children: %d, Documents: %d\n",
-                        i, node.id, node.name, node.parentId, node.nodeCount, node.docCount);
-
-                // Print documents for this node
-                if (!node.documents.isEmpty()) {
-                    System.out.println("  Documents: " + node.documents);
-                }
-            }
-        }
-    }
-
     // Main method for demonstration
     public static void main(String[] args) {
         ArrayTreeDMS dms = new ArrayTreeDMS();
+
+        System.out.println("Initial Tree Structure:");
+        dms.printTree();
 
         // Create tree structure
         int rootIndex = dms.insertNode(-1, "Root");
@@ -131,5 +119,20 @@ public class ArrayTreeDMS {
         int newDocumentsIndex = dms.insertNode(rootIndex, "NewDocuments");
         int newDocument1Index = dms.insertNode(newDocumentsIndex, "Document1");
         dms.printTree();
+    }
+
+    public void printTree() {
+        for (int i = 0; i < MAX_NODES; i++) {
+            if (nodes[i] != null) {
+                TreeNode node = nodes[i];
+                System.out.printf("Index: %d, ID: %d, Name: %s, Parent: %d, Children: %d, Documents: %d, Point: %d\n",
+                        i, node.id, node.name, node.parentId, node.nodeCount, node.docCount, node.fieldPointer);
+
+                // Print documents for this node
+                if (!node.documents.isEmpty()) {
+                    System.out.println("  Documents: " + node.documents);
+                }
+            }
+        }
     }
 }
