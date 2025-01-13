@@ -91,6 +91,12 @@ public class ArrayTreeDMSstatic {
             throw new IllegalArgumentException("Invalid node index");
         }
 
+        for (int i = 0; i < MAX_NODES; i++) {
+            if (nodes[i] != null && nodes[i].parentId == nodeIndex) {
+                deleteNode(i);
+            }
+        }
+
         // Decrement parent's child count
         int parentId = nodes[nodeIndex].parentId;
         if (parentId != nodeIndex && nodes[parentId] != null) {
@@ -98,21 +104,18 @@ public class ArrayTreeDMSstatic {
         }
 
         UpdateNextFreeIndexDelete(nodeIndex);
-
-
     }
 
     public void UpdateNextFreeIndexDelete(int nodeIndex) {
         //---------------------------------------------------------------------------------------------
         nodes[nodeIndex].fieldPointer = nextFreeIndex;  // Make the deleted node point to the current free slot
-        nextFreeIndex = nodeIndex;                     // Update the general pointer to the newly deleted slot
+        nextFreeIndex = nodeIndex;                     // Update the general pointer to deleted slot
 
         // Reset the deleted node's fields to their default values
         nodes[nodeIndex].name = null;
         nodes[nodeIndex].parentId = nodeIndex;
     }
 
-    // Print the entire tree structure
     public static void main(String[] args) {
 //--------------------------------------------------------------------------------------------------
         ArrayTreeDMSstatic dms = new ArrayTreeDMSstatic();
@@ -122,7 +125,7 @@ public class ArrayTreeDMSstatic {
         // Create tree structure
         int rootIndex = dms.insertNode(0, "Root");
         int documentsIndex = dms.insertNode(rootIndex, "Documents");
-        int projectsIndex = dms.insertNode(rootIndex, "Projects");
+        int projectsIndex = dms.insertNode(documentsIndex, "Projects");
         System.out.println("pointer:" + dms.nextFreeIndex);
        // dms.printIndexPointers();
 
