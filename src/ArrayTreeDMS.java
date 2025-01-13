@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArrayTreeDMS {
+//---------------------------------------------------------------------------------------------
     private static final int MAX_NODES = 1000;
     private TreeNode[] nodes = new TreeNode[MAX_NODES];
     private int nextFreeIndex = 0;
@@ -9,13 +10,14 @@ public class ArrayTreeDMS {
 
     // Nested TreeNode class
     private class TreeNode {
+    //---------------------------------------------------------------------------------------------
         int id;             // Node's unique identifier
         int parentId;       // Parent node's ID
         String name;        // Node name
         int nodeCount;      // Number of direct child nodes
         int docCount;       // Total documents in this node and its subtree
         int fieldPointer;   // Pointer to the next available field
-        List<String> documents;  // Documents in this specific node
+      //  List<String> documents;  // Documents in this specific node
 
         TreeNode(int id, int parentId, String name) {
             this.id = id;
@@ -24,12 +26,13 @@ public class ArrayTreeDMS {
             this.nodeCount = 0;
             this.docCount = 0;
             this.fieldPointer = (id + 1);
-            this.documents = new ArrayList<>();
+         //   this.documents = new ArrayList<>();
         }
     }
 
     // Insert a new node into the array
     public int insertNode(int parentId, String nodeName) {
+    //---------------------------------------------------------------------------------------------
         // Check if array is full
         if (nextFreeIndex >= MAX_NODES) {
             throw new IllegalStateException("Tree array is full");
@@ -59,6 +62,7 @@ public class ArrayTreeDMS {
 
     // Update to the next free index
     private void updateNextFreeIndexAdd() {
+    //---------------------------------------------------------------------------------------------
         TreeNode node = nodes[nextFreeIndex];
         nextFreeIndex = node.fieldPointer;;
 
@@ -66,6 +70,7 @@ public class ArrayTreeDMS {
 
     // Delete a node and its entire subtree
     public void deleteNode(int nodeIndex) {
+    //---------------------------------------------------------------------------------------------
         // Validate node
         if (nodeIndex < 0 || nodeIndex >= MAX_NODES || nodes[nodeIndex] == null) {
             throw new IllegalArgumentException("Invalid node index");
@@ -90,6 +95,7 @@ public class ArrayTreeDMS {
     }
 
     public void UpdateNextFreeIndexDelete(int nodeIndex) {
+    //---------------------------------------------------------------------------------------------
         TreeNode node = nodes[nodeIndex];
         int freeProvisionalPointer = 0;
         freeProvisionalPointer = nextFreeIndex;
@@ -98,8 +104,8 @@ public class ArrayTreeDMS {
     }
 
     // Print the entire tree structure
-    // Main method for demonstration
     public static void main(String[] args) {
+//--------------------------------------------------------------------------------------------------
         ArrayTreeDMS dms = new ArrayTreeDMS();
 
         System.out.println("pointer:" + dms.nextFreeIndex);
@@ -137,13 +143,13 @@ public class ArrayTreeDMS {
         for (int i = 0; i < MAX_NODES; i++) {
             if (nodes[i] != null) {
                 TreeNode node = nodes[i];
-                System.out.printf("Index: %d, ID: %d, Name: %s, Parent: %d, Children: %d, Documents: %d, Point: %d\n",
-                        i, node.id, node.name, node.parentId, node.nodeCount, node.docCount, node.fieldPointer);
+                System.out.printf("Index: %d, ID: %d, Name: %s, Parent: %d, Children: %d, Point: %d\n", //Documents: %d
+                        i, node.id, node.name, node.parentId, node.nodeCount, node.fieldPointer); //node.docCount
 
                 // Print documents for this node
-                if (!node.documents.isEmpty()) {
-                    System.out.println(" Documents: " + node.documents);
-                }
+//                if (!node.documents.isEmpty()) {
+//                    System.out.println(" Documents: " + node.documents);
+//                }
             }
         }
     }
