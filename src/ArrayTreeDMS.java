@@ -39,7 +39,7 @@ public class ArrayTreeDMS {
         }
 
         // Validate parent node (if not root)
-        if (parentId != -1 && (parentId >= MAX_NODES || nodes[parentId] == null)) {
+        if (parentId != 0 && (parentId >= MAX_NODES || nodes[parentId] == null)) {
             throw new IllegalArgumentException("Invalid parent node");
         }
 
@@ -50,7 +50,7 @@ public class ArrayTreeDMS {
         nodes[nextFreeIndex] = newNode;
 
         // Increment parent's child count if not root
-        if (parentId != -1) {
+        if (parentId != 0) {
             nodes[parentId].nodeCount++;
         }
 
@@ -86,7 +86,7 @@ public class ArrayTreeDMS {
 
         // Decrement parent's child count
         int parentId = nodes[nodeIndex].parentId;
-        if (parentId != -1 && nodes[parentId] != null) {
+        if (parentId != 0 && nodes[parentId] != null) {
             nodes[parentId].nodeCount--;
         }
 
@@ -111,7 +111,7 @@ public class ArrayTreeDMS {
         System.out.println("pointer:" + dms.nextFreeIndex);
 
         // Create tree structure
-        int rootIndex = dms.insertNode(-1, "Root");
+        int rootIndex = dms.insertNode(0, "Root");
         int documentsIndex = dms.insertNode(rootIndex, "Documents");
         int projectsIndex = dms.insertNode(rootIndex, "Projects");
         System.out.println("pointer:" + dms.nextFreeIndex);
