@@ -76,8 +76,7 @@ public class ArrayTreeDMS {
             throw new IllegalArgumentException("Invalid node index");
         }
 
-        // Recursively delete all children first
-        //TODO: make it to delete all that point to this not recursive
+        // Recursively delete all children
         for (int i = 0; i < MAX_NODES; i++) {
             if (nodes[i] != null && nodes[i].parentId == nodeIndex) {
                 deleteNode(i);
