@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ArrayTreeDMSstatic {
     //---------------------------------------------------------------------------------------------
-    private static final int MAX_NODES = 1000;
+    private static final int MAX_NODES = 10;
     private TreeNode[] nodes = new TreeNode[MAX_NODES];
     private int nextFreeIndex = 0;
 
@@ -53,10 +53,11 @@ public class ArrayTreeDMSstatic {
         }
 
         // Validate parent node (if not root)
-        if (parentId != 0 && (parentId >= MAX_NODES || nodes[parentId] == null)) {
+        if (parentId != nextFreeIndex && (parentId >= MAX_NODES || nodes[parentId] == null)) {
             throw new IllegalArgumentException("Invalid parent node");
         }
 
+        int currentIndex = nextFreeIndex;
         // Create new node
         TreeNode newNode = new TreeNode(nextFreeIndex, parentId, nodeName);
 
@@ -64,7 +65,7 @@ public class ArrayTreeDMSstatic {
         nodes[nextFreeIndex] = newNode;
 
         // Increment parent's child count if not root
-        if (parentId != 0) {
+        if (parentId != currentIndex) {
             nodes[parentId].nodeCount++;
         }
 
@@ -90,30 +91,25 @@ public class ArrayTreeDMSstatic {
             throw new IllegalArgumentException("Invalid node index");
         }
 
-        // Recursively delete all children
-        for (int i = 0; i < MAX_NODES; i++) {
-            if (nodes[i] != null && nodes[i].parentId == nodeIndex) {
-                deleteNode(i);
-            }
-        }
-
         // Decrement parent's child count
         int parentId = nodes[nodeIndex].parentId;
-        if (parentId != 0 && nodes[parentId] != null) {
+        if (parentId != nodeIndex && nodes[parentId] != null) {
             nodes[parentId].nodeCount--;
         }
 
         UpdateNextFreeIndexDelete(nodeIndex);
-        nodes[nodeIndex] = null;
+
+
     }
 
     public void UpdateNextFreeIndexDelete(int nodeIndex) {
         //---------------------------------------------------------------------------------------------
-        TreeNode node = nodes[nodeIndex];
-        int freeProvisionalPointer = 0;
-        freeProvisionalPointer = nextFreeIndex;
-        nextFreeIndex = nodeIndex;
-        node.fieldPointer = freeProvisionalPointer;
+        nodes[nodeIndex].fieldPointer = nextFreeIndex;  // Make the deleted node point to the current free slot
+        nextFreeIndex = nodeIndex;                     // Update the general pointer to the newly deleted slot
+
+        // Reset the deleted node's fields to their default values
+        nodes[nodeIndex].name = null;
+        nodes[nodeIndex].parentId = nodeIndex;
     }
 
     // Print the entire tree structure
