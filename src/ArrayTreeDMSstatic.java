@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ArrayTreeDMSstatic {
     //---------------------------------------------------------------------------------------------
-    private static final int MAX_NODES = 10;
+    private static int MAX_NODES = 5;
     private TreeNode[] nodes = new TreeNode[MAX_NODES];
     private int nextFreeIndex = 0;
 
@@ -35,9 +35,9 @@ public class ArrayTreeDMSstatic {
     }
 
     //INITIALIZE THE TREE FOR STATIC
-    {
+    public void initArrayTree(){
+        //---------------------------------------------------------------------------------------------
         for (int i = 0; i < MAX_NODES; i++) {
-
             nodes[i] = new TreeNode(i, i, null);
             nodes[i].fieldPointer = (i == MAX_NODES - 1) ? i : i + 1;  // Last index points to itself
         }
@@ -49,7 +49,9 @@ public class ArrayTreeDMSstatic {
         //---------------------------------------------------------------------------------------------
         // Check if array is full
         if (nextFreeIndex >= MAX_NODES) {
-            throw new IllegalStateException("Tree array is full");
+//            throw new IllegalStateException("Tree array is full");
+            MAX_NODES = MAX_NODES + 2; //change then according to match teh requirement
+            initArrayTree();
         }
 
         // Validate parent node (if not root)
@@ -119,6 +121,7 @@ public class ArrayTreeDMSstatic {
     public static void main(String[] args) {
 //--------------------------------------------------------------------------------------------------
         ArrayTreeDMSstatic dms = new ArrayTreeDMSstatic();
+        dms.initArrayTree(); //static way of doing it
 
         System.out.println("pointer:" + dms.nextFreeIndex);
 
@@ -142,13 +145,18 @@ public class ArrayTreeDMSstatic {
         System.out.println("pointer:" + dms.nextFreeIndex);
        // dms.printIndexPointers();
 
-        // Insert a new node to show reuse of deleted index
+        // Insert a new node , cehck delted position + expansion
         System.out.println("\nInserting a new node:");
         int newDocumentsIndex = dms.insertNode(rootIndex, "NewDocuments");
         int newDocument1Index = dms.insertNode(newDocumentsIndex, "Document1");
+        int newDocumentsIndex2 = dms.insertNode(rootIndex, "NewDocuments");
+        int newDocument1Index2 = dms.insertNode(newDocumentsIndex, "Document1");
+        int newDocument1Index3 = dms.insertNode(newDocumentsIndex, "Document1");
         dms.printTree();
         System.out.println("pointer:" + dms.nextFreeIndex);
        // dms.printIndexPointers();
+
+
     }
 
     public void printTree() {
