@@ -43,15 +43,28 @@ public class ArrayTreeDMSstatic {
         }
     }
 
+    public void expandArray(){
+        //---------------------------------------------------------------------------------------------
+        MAX_NODES = MAX_NODES + 3; //change then according to match teh requirement
+        TreeNode[] temp = new TreeNode[MAX_NODES];
+        for (int i = 0; i < nodes.length; i++) {
+            temp[i] = nodes[i];
+        }
+        nodes = temp;
+        for (int i = nextFreeIndex; i < MAX_NODES; i++) {
+            nodes[i] = new TreeNode(i, i, null);
+            nodes[i].fieldPointer = (i == MAX_NODES - 1) ? i : i + 1;  // Last index points to itself
+        }
+    }
+
 
     // Insert a new node into the array
     public int insertNode(int parentId, String nodeName) {
         //---------------------------------------------------------------------------------------------
-        // Check if array is full
+        // Check if array is full if yes add more space
         if (nextFreeIndex >= MAX_NODES) {
 //            throw new IllegalStateException("Tree array is full");
-            MAX_NODES = MAX_NODES + 2; //change then according to match teh requirement
-            initArrayTree();
+            expandArray();
         }
 
         // Validate parent node (if not root)
