@@ -43,6 +43,7 @@ public class ArrayTreeDMSstatic {
         }
     }
 
+    // Expand the array when it is full
     public void expandArray(){
         //---------------------------------------------------------------------------------------------
         MAX_NODES = MAX_NODES + 3; //change then according to match teh requirement
